@@ -10,3 +10,8 @@ export interface ProductApiModel {
 	category: string;
 	price: number;
 }
+
+export interface ProductListApiModel {
+	total: number;
+	items: ProductApiModel[];
+}

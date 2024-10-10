@@ -160,23 +160,23 @@
 	<template id="success">
 		<div class="order-success">
 			<h2 class="order-success__title">Заказ оформлен</h2>
-			<p class="order-success__description">Списано 0 синапсов</p>
+			<p class="order-success__description"></p>
 			<button class="button order-success__close">За новыми покупками!</button>
 		</div>
 	</template>
 
 	<template id="card-catalog">
 		<button class="gallery__item card">
-			<span class="card__category card__category_soft">софт-скил</span>
-			<h2 class="card__title">+1 час в сутках</h2>
-			<img class="card__image" src="<%=require('../images/Subtract.svg')%>" alt="" />
-			<span class="card__price">750 синапсов</span>
+			<span class="card__category card__category_soft"></span>
+			<h2 class="card__title"></h2>
+			<img class="card__image" src="" alt="" />
+			<span class="card__price"></span>
 		</button>
 	</template>
 
 	<template id="card-preview">
 		<div class="card card_full">
-			<img class="card__image" src="<%=require('../images/Subtract.svg')%>" alt="" />
+			<img class="card__image" src="" alt="" />
 			<div class="card__column">
 				<span class="card__category card__category_other">другое</span>
 				<h2 class="card__title">Бэкенд-антистресс</h2>
@@ -204,7 +204,7 @@
 			<ul class="basket__list"></ul>
 			<div class="modal__actions">
 				<button class="button basket__button">Оформить</button>
-				<span class="basket__price">0 синапсов</span>
+				<span class="basket__price"></span>
 			</div>
 		</div>
 	</template>
@@ -221,11 +221,11 @@
 				</div>
 				<label class="order__field">
 					<span class="form__label modal__title">Адрес доставки</span>
-					<input name="address" class="form__input" type="text" placeholder="Введите адрес" />
+					<input name="address" class="form__input" required type="text" placeholder="Введите адрес"/>
 				</label>
 			</div>
 			<div class="modal__actions">
-				<button type="submit" disabled class="button order__button">Далее</button>
+				<button type="submit" class="button order__button">Далее</button>
 				<span class="form__errors"></span>
 			</div>
 		</form>
@@ -236,15 +236,15 @@
 			<div class="order">
 				<label class="order__field">
 					<span class="form__label modal__title">Email</span>
-					<input name="email" class="form__input" type="text" placeholder="Введите Email" />
+					<input name="email" class="form__input" required type="text" placeholder="Введите Email" />
 				</label>
 				<label class="order__field">
 					<span class="form__label modal__title">Телефон</span>
-					<input name="phone" class="form__input" type="text" placeholder="+7 (" />
+					<input name="phone" class="form__input" required type="text" placeholder="+7 (" />
 				</label>
 			</div>
 			<div class="modal__actions">
-				<button type="submit" disabled class="button">Оплатить</button>
+				<button type="submit" class="button">Оплатить</button>
 				<span class="form__errors"></span>
 			</div>
 		</form>

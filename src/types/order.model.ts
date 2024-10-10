@@ -2,9 +2,13 @@
 
 import { ProductId } from './products.model';
 
-export interface OrderApiResponseModel {
+export interface OrderApiResponseSuccessModel {
 	id: string;
 	total: number;
+}
+
+export interface OrderApiResponseErrorModel {
+	error: string;
 }
 
 export enum OrderPaymentType {
@@ -13,7 +17,7 @@ export enum OrderPaymentType {
 }
 
 export interface OrderApiRequestModel {
-	payment: OrderPaymentType;
+	payment: OrderPaymentType | null;
 	email: string;
 	phone: string;
 	address: string;
