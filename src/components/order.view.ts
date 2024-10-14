@@ -1,9 +1,12 @@
 import { EventEmitter } from './base/events';
-import { payCardEventName, payCashEventName } from './events';
+import { payCardEventName, payCashEventName, clickOnOrderButtonEventName } from './events';
 
 export class OrderView {
   orderTemplate: HTMLElement;
   eventEmitter: EventEmitter;
+  orderButton: HTMLElement;
+  orderFormError: HTMLElement;
+  orderFormInput: HTMLInputElement;
 
   constructor(eventEmitter: EventEmitter) {
     const orderTemplate = document.querySelector('#order') as HTMLTemplateElement;
@@ -26,5 +29,13 @@ export class OrderView {
       cardButton.classList.add('button_alt');
       this.eventEmitter.emit(payCashEventName)
     }) //обработчик клика выбора метода оплаты
+
+    this.orderButton = this.orderTemplate.querySelector('.order__button');
+    this.orderFormError = this.orderTemplate.querySelector('.form__errors');
+    this.orderFormInput = this.orderTemplate.querySelector('.form__input') as HTMLInputElement;
+
+    this.orderButton.addEventListener('click', (event) => {
+      this.eventEmitter.emit(clickOnOrderButtonEventName);
+    }) //валидация поля адрес и открытие модалки личных данных
   }
 }

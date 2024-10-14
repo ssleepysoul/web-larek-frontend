@@ -1,15 +1,19 @@
 import { CDN_URL } from '../utils/constants';
-import { ProductApiModel } from '../types/products.model'
+import { ProductApiModel } from '../types/products.model';
+import { EventEmitter } from './base/events';
+import { clickOnAddToBasketButtonEventName } from './events';
 
 export class CardPreviewView {
   protected template: HTMLElement;
+  private eventEmitter: EventEmitter;
   
-  constructor(){
+  constructor(eventEmitter: EventEmitter){
     const cardPreviewTemplate = document.querySelector('#card-preview') as HTMLTemplateElement;
     this.template = cardPreviewTemplate.content.querySelector('.card').cloneNode(true) as HTMLElement;
+    this.eventEmitter = eventEmitter;
   }
 
-  createElement(card: ProductApiModel): HTMLElement{
+  createElement(card: ProductApiModel, isItemInBasket: boolean): HTMLElement{
     const cardElement = this.template.cloneNode(true) as HTMLElement;
     const cardTitle = cardElement.querySelector('.card__title');
     const cardCategory = cardElement.querySelector('.card__category');
@@ -27,7 +31,22 @@ export class CardPreviewView {
       cardPrice.textContent = `${card.price} синапсов`;
     }
 
+    const addToBasketButton = cardElement.querySelector('.card__button');
+    if(isItemInBasket){
+      addToBasketButton.setAttribute('disabled', 'disabled');
+    } else {
+      addToBasketButton.removeAttribute('disabled');
+    } //
+
+    addToBasketButton.addEventListener('click', () => {
+      this.eventEmitter.emit(clickOnAddToBasketButtonEventName)
+    })
+
     return cardElement;
+  }
+
+  setDisabled(button: HTMLElement){
+    button.setAttribute('disabled', 'disabled');
   }
 }
 

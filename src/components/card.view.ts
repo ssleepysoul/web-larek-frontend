@@ -1,12 +1,18 @@
 import { ProductApiModel } from '../types/products.model';
 import { CDN_URL } from '../utils/constants';
+import { EventEmitter } from './base/events';
+import { openCardElementEventName } from './events';
 
 export class CardView {
   protected template: HTMLElement;
+  eventEmitter: EventEmitter;
+  cardListElement: HTMLElement;
 
-  constructor(){
+  constructor(eventEmitter: EventEmitter){
     const templateCardCatalog = document.querySelector("#card-catalog") as HTMLTemplateElement;
     this.template = templateCardCatalog.content.querySelector('.card').cloneNode(true) as HTMLElement;
+    this.eventEmitter = eventEmitter;
+    this.cardListElement = document.querySelector('.gallery');
   }
 
   render(card: ProductApiModel){
@@ -24,6 +30,10 @@ export class CardView {
     } else {
       cardPrice.textContent = `${card.price} синапсов`;
     }
+
+    cardElement.addEventListener('click', () => {
+      this.eventEmitter.emit(openCardElementEventName, card);
+    });
 
     return cardElement;
   }
