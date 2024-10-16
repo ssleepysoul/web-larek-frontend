@@ -81,14 +81,15 @@ export class AppPresenter {
         this.basketView.render(this.appModel.basketItems);
         this.modalView.open(this.basketView.templateBasket);
       }
-    }) // открытие корзины и отрисовка контента внутри корзины
+    }); // открытие корзины и отрисовка контента внутри корзины
 
     this.eventEmitter.on(updateBasketItemsEventName, (data: ProductApiModel) => {
       this.appModel.basketItems = this.appModel.basketItems.filter(item => item.id !== data.id);
         this.basketView.counterPrice -= data.price;
         this.basketView.basketPrice.textContent = `${this.basketView.counterPrice} синапсов`;
-        this.basketView.basketCounterUpdate(this.appModel.basketItems.length)
-    }) // удаление товара из корзины
+        this.basketView.basketCounterUpdate(this.appModel.basketItems.length);
+        this.basketView.updateBasketItemIndexes();
+    }); // удаление товара из корзины
 
     this.eventEmitter.on(clickOnBasketButtonEventName, () => {
       this.modalView.close();
@@ -97,7 +98,7 @@ export class AppPresenter {
         return item.id
       })
       this.appModel.orderData.total = this.basketView.counterPrice;
-    }) // закрывается модалка с товарами и открывается модалка с оплатой
+    }); // закрывается модалка с товарами и открывается модалка с оплатой
 
     this.eventEmitter.on(payCardEventName, () => {
       this.appModel.orderData.payment = OrderPaymentType.online;
@@ -112,6 +113,7 @@ export class AppPresenter {
       if(!this.orderView.orderFormInput.value) {
         event.preventDefault();
         this.orderView.orderFormError.textContent = this.orderView.orderFormInput.validationMessage;
+
       } else {
         event.preventDefault();
         this.appModel.orderData.address = this.orderView.orderFormInput.value;

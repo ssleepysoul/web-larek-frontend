@@ -33,9 +33,18 @@ export class OrderView {
     this.orderButton = this.orderTemplate.querySelector('.order__button');
     this.orderFormError = this.orderTemplate.querySelector('.form__errors');
     this.orderFormInput = this.orderTemplate.querySelector('.form__input') as HTMLInputElement;
+    this.orderButton.setAttribute('disabled', 'disabled');
 
     this.orderButton.addEventListener('click', (event) => {
       this.eventEmitter.emit(clickOnOrderButtonEventName);
-    }) //валидация поля адрес и открытие модалки личных данных
+    });//валидация поля адрес и открытие модалки личных данных
+
+    this.orderFormInput.addEventListener('input', (event: InputEvent) => {
+      if((event.target as HTMLInputElement).value === ''){
+        this.orderButton.setAttribute('disabled', 'disabled');
+      } else {
+        this.orderButton.removeAttribute('disabled');
+      }
+    });
   }
 }

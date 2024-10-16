@@ -31,7 +31,10 @@ export class AppModel {
     this.cardsRequestApi.get('/product/').then((res) => {
       this.cardsObject = res as ProductListApiModel;
       this.eventEmitter.emit(getCardsEventName);
-    });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   }
 
   getCardById(cardId: string):void{
@@ -39,12 +42,18 @@ export class AppModel {
       this.cardById = res as ProductApiModel;
       this.eventEmitter.emit(getCardByIdEventName);
     })
+    .catch((err) => {
+      console.log(err); 
+    })
   }
 
   postOrder(orderData: OrderApiRequestModel):void{
     this.cardsRequestApi.post('/order', orderData).then((res) => {
       this.orderResponse = res as OrderApiResponseSuccessModel | OrderApiResponseErrorModel;
       this.eventEmitter.emit(getOrderResponseEventName);
+    })
+    .catch((err) => {
+      console.log(err); 
     })
   }
 }

@@ -23,6 +23,17 @@ export class CardPreviewView {
 
     cardTitle.textContent = card.title;
     cardCategory.textContent = card.category;
+    if(card.category === 'софт-скил'){
+      cardCategory.classList.add('card__category_soft');
+    } else if(card.category === 'другое'){
+      cardCategory.classList.add('card__category_other');
+    } else if(card.category === 'дополнительное'){
+      cardCategory.classList.add('card__category_additional');
+    } else if(card.category === 'кнопка'){
+      cardCategory.classList.add('card__category_button');
+    } else if(card.category === 'хард-скил'){
+      cardCategory.classList.add('card__category_hard');
+    }
     cardImage.setAttribute('src', `${CDN_URL}${card.image}`);
     cardText.textContent = card.description;
     if(card.price === null || card.price === 0){
@@ -32,7 +43,7 @@ export class CardPreviewView {
     }
 
     const addToBasketButton = cardElement.querySelector('.card__button');
-    if(isItemInBasket){
+    if(isItemInBasket || card.price === null || card.price === 0){
       addToBasketButton.setAttribute('disabled', 'disabled');
     } else {
       addToBasketButton.removeAttribute('disabled');

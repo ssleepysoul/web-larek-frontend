@@ -49,8 +49,8 @@ export class BasketView {
       this.basketPrice.textContent = `${this.counterPrice} синапсов`;
       
       basketItemDelete.addEventListener('click', () => {
-        this.eventEmitter.emit(updateBasketItemsEventName, item);
         сardBasket.remove();
+        this.eventEmitter.emit(updateBasketItemsEventName, item);
       })
       this.basketList.append(сardBasket);
     }) 
@@ -59,6 +59,14 @@ export class BasketView {
     basketButton.addEventListener('click', () => {
       this.eventEmitter.emit(clickOnBasketButtonEventName);
     }) // закрывается модалка с товарами и открывается модалка с оплатой
+  }
+
+  updateBasketItemIndexes():void{
+    const basketItems = this.basketList.querySelectorAll('.basket__item');
+    basketItems.forEach((item, index) => {
+      const basketItemIndex = item.querySelector('.basket__item-index');
+      basketItemIndex.textContent = `${index + 1}`;
+    })
   }
 
   clear(basketItems: BasketItemModel []){

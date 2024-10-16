@@ -22,5 +22,23 @@ export class ContactsView {
     this.payButton.addEventListener('click', (event) => {
       this.eventEmitter.emit(clickOnPayButtonEventName);
     })
+
+    this.payButton.setAttribute('disabled', 'disabled');
+
+    this.payFormInputEmail.addEventListener('input', (event: InputEvent) => {
+      if((event.target as HTMLInputElement).value === '' || this.payFormInputPhone.value === ''){
+        this.payButton.setAttribute('disabled', 'disabled');
+      } else {
+        this.payButton.removeAttribute('disabled');
+      }
+    });
+
+    this.payFormInputPhone.addEventListener('input', (event: InputEvent) => {
+      if((event.target as HTMLInputElement).value === '' || this.payFormInputEmail.value === ''){
+        this.payButton.setAttribute('disabled', 'disabled');
+      } else {
+        this.payButton.removeAttribute('disabled');
+      }
+    });
   }
 }
