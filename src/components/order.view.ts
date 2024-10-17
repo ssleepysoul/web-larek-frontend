@@ -15,21 +15,45 @@ export class OrderView {
 
     const cardButton = this.orderTemplate.querySelector('[name="card"]');
     const cashButton = this.orderTemplate.querySelector('[name="cash"]');
+    const orderButtons = this.orderTemplate.querySelector('.order__buttons');
     cardButton.addEventListener('click', () => {
       cardButton.classList.toggle('button_alt_active');
       cardButton.classList.toggle('button_alt');
       cashButton.classList.remove('button_alt_active');
       cashButton.classList.add('button_alt');
       this.eventEmitter.emit(payCardEventName);
+      const dataValue = orderButtons.getAttribute('data-value');
+      if(dataValue === 'payCard'){
+        orderButtons.removeAttribute('data-value');
+      } else {
+        orderButtons.setAttribute('data-value', 'payCard')
+      }
+      if(this.orderFormInput.value === '' || !orderButtons.getAttribute('data-value')){
+        this.orderButton.setAttribute('disabled', 'disabled');
+      } else {
+        this.orderButton.removeAttribute('disabled');
+      }
     })
     cashButton.addEventListener('click', () => {
       cashButton.classList.toggle('button_alt_active');
       cashButton.classList.toggle('button_alt');
       cardButton.classList.remove('button_alt_active');
       cardButton.classList.add('button_alt');
-      this.eventEmitter.emit(payCashEventName)
+      this.eventEmitter.emit(payCashEventName);
+      const dataValue = orderButtons.getAttribute('data-value');
+      if(dataValue === 'payCash'){
+        orderButtons.removeAttribute('data-value');
+      } else {
+        orderButtons.setAttribute('data-value', 'payCash')
+      }
+      if(this.orderFormInput.value === '' || !orderButtons.getAttribute('data-value')){
+        this.orderButton.setAttribute('disabled', 'disabled');
+      } else {
+        this.orderButton.removeAttribute('disabled');
+      }
     }) //обработчик клика выбора метода оплаты
 
+    
     this.orderButton = this.orderTemplate.querySelector('.order__button');
     this.orderFormError = this.orderTemplate.querySelector('.form__errors');
     this.orderFormInput = this.orderTemplate.querySelector('.form__input') as HTMLInputElement;
@@ -40,7 +64,7 @@ export class OrderView {
     });//валидация поля адрес и открытие модалки личных данных
 
     this.orderFormInput.addEventListener('input', (event: InputEvent) => {
-      if((event.target as HTMLInputElement).value === ''){
+      if((event.target as HTMLInputElement).value === '' || !orderButtons.getAttribute('data-value')){
         this.orderButton.setAttribute('disabled', 'disabled');
       } else {
         this.orderButton.removeAttribute('disabled');
